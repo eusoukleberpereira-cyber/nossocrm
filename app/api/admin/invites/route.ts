@@ -43,6 +43,7 @@ export async function GET() {
     .select('id, token, role, email, created_at, expires_at, used_at, created_by')
     .eq('organization_id', me.organization_id)
     .is('used_at', null)
+    .limit(200)
     .order('created_at', { ascending: false });
 
   if (error) return json({ error: error.message }, 500);

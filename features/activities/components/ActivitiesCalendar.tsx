@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, Phone, Users, Mail, CheckSquare } from 'lucide-react';
 import { Activity, Deal } from '@/types';
 
@@ -48,16 +48,6 @@ export const ActivitiesCalendar: React.FC<ActivitiesCalendarProps> = ({
         setCurrentDate(new Date());
     };
 
-    const getActivitiesForDateTime = (date: Date, hour: number) => {
-        return activities.filter(activity => {
-            const activityDate = new Date(activity.date);
-            return activityDate.getDate() === date.getDate() &&
-                activityDate.getMonth() === date.getMonth() &&
-                activityDate.getFullYear() === date.getFullYear() &&
-                activityDate.getHours() === hour;
-        });
-    };
-
     const getActivityIcon = (type: Activity['type']) => {
         switch (type) {
             case 'CALL': return <Phone size={14} className="text-white" />;
@@ -86,6 +76,27 @@ export const ActivitiesCalendar: React.FC<ActivitiesCalendarProps> = ({
     const isOverdue = (activity: Activity) => {
         return new Date(activity.date) < new Date() && !activity.completed;
     };
+
+    // Performance: grid chama `getActivitiesForDateTime` muitas vezes.
+    // Indexamos atividades por (YYYY-MM-DD|hour) uma vez para evitar filters repetidos.
+    const activitiesByDayHour = useMemo(() => {
+        const map = new Map<string, Activity[]>();
+        for (const a of activities) {
+            const d = new Date(a.date);
+            const key = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}|${d.getHours()}`;
+            const list = map.get(key);
+            if (list) list.push(a);
+            else map.set(key, [a]);
+        }
+        return map;
+    }, [activities]);
+
+    // Performance: evitar `deals.find` em hover/tooltips.
+    const dealTitleById = useMemo(() => {
+        const map = new Map<string, string>();
+        for (const d of deals) map.set(d.id, d.title);
+        return map;
+    }, [deals]);
 
     return (
         <div className="bg-white dark:bg-dark-card rounded-2xl border border-slate-200 dark:border-white/5 overflow-hidden shadow-xl">
@@ -147,7 +158,8 @@ export const ActivitiesCalendar: React.FC<ActivitiesCalendarProps> = ({
                                 {hour}:00
                             </div>
                             {weekDays.map((date, i) => {
-                                const hourActivities = getActivitiesForDateTime(date, hour);
+                                const key = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}|${hour}`;
+                                const hourActivities = activitiesByDayHour.get(key) ?? [];
                                 return (
                                     <div
                                         key={i}
@@ -171,7 +183,7 @@ export const ActivitiesCalendar: React.FC<ActivitiesCalendarProps> = ({
                                                         cursor-pointer
                                                         overflow-hidden
                                                     `}
-                                                    title={`${activity.title} - ${deals.find(d => d.id === activity.dealId)?.title || ''}`}
+                                                    title={`${activity.title} - ${activity.dealId ? (dealTitleById.get(activity.dealId) ?? '') : ''}`}
                                                 >
                                                     {/* Shine effect on hover */}
                                                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
@@ -195,7 +207,7 @@ export const ActivitiesCalendar: React.FC<ActivitiesCalendarProps> = ({
                                                                 {activity.description}
                                                             </p>
                                                             <p className="text-xs text-white/80 mt-1 font-medium">
-                                                                📎 {deals.find(d => d.id === activity.dealId)?.title || 'Sem deal vinculado'}
+                                                                📎 {activity.dealId ? (dealTitleById.get(activity.dealId) ?? 'Sem deal vinculado') : 'Sem deal vinculado'}
                                                             </p>
                                                         </div>
                                                     </div>

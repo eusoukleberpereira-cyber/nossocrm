@@ -211,7 +211,8 @@ export const useInboxController = () => {
   );
 
   // Smart Scoring: Calculate priority based on value, probability, and time
-  const calculateDealScore = (deal: DealView, type: 'STALLED' | 'UPSELL'): number => {
+  // Performance: keep scoring fn stable to avoid invalidating memoized pipelines.
+  const calculateDealScore = useCallback((deal: DealView, type: 'STALLED' | 'UPSELL'): number => {
     const value = deal.value || 0;
     const probability = deal.probability || 50;
     const daysSinceUpdate = Math.floor((Date.now() - new Date(deal.updatedAt).getTime()) / (1000 * 60 * 60 * 24));
@@ -226,7 +227,7 @@ export const useInboxController = () => {
     const timeFactor = Math.min(daysSinceUpdate / 30, 2); // Cap at 2x for very old deals
 
     return (valueScore * probFactor * (1 + timeFactor));
-  };
+  }, []);
 
   // Gerar sugestões de IA como objetos com scoring inteligente
   const aiSuggestions = useMemo((): AISuggestion[] => {
@@ -301,7 +302,7 @@ export const useInboxController = () => {
       const priorityOrder = { high: 0, medium: 1, low: 2 };
       return priorityOrder[a.priority] - priorityOrder[b.priority];
     });
-  }, [upsellDeals, stalledDeals, rescueContacts, hiddenSuggestionIds]);
+  }, [upsellDeals, stalledDeals, rescueContacts, hiddenSuggestionIds, calculateDealScore]);
 
   // --- Gerar Briefing via Edge Function (sem necessidade de API key no localStorage) ---
   useEffect(() => {
