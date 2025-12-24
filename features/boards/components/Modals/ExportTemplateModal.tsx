@@ -166,7 +166,29 @@ export function ExportTemplateModal(props: {
         const next = prev.filter(id => id !== boardId);
         return next.length === 0 ? prev : next;
       }
-      return [...prev, boardId];
+      // Insert following the visible boards order (not "selection order").
+      // This avoids confusing exports where the active board (pre-selected) stays first forever.
+      const idxInBoards = boards.findIndex(b => b.id === boardId);
+      if (idxInBoards === -1) return [...prev, boardId];
+
+      const orderIndex = new Map<string, number>();
+      for (let i = 0; i < boards.length; i += 1) {
+        orderIndex.set(boards[i].id, i);
+      }
+
+      const next = [...prev];
+      let insertAt = next.length;
+      for (let i = 0; i < next.length; i += 1) {
+        const existingId = next[i];
+        const existingIdx = orderIndex.get(existingId);
+        if (existingIdx === undefined) continue;
+        if (existingIdx > idxInBoards) {
+          insertAt = i;
+          break;
+        }
+      }
+      next.splice(insertAt, 0, boardId);
+      return next;
     });
   };
 
@@ -299,6 +321,9 @@ export function ExportTemplateModal(props: {
             {mode === 'journey' && (
               <div className="mt-4">
                 <div className="text-xs font-semibold text-slate-600 dark:text-slate-300 mb-2">boards da jornada (ordem importa)</div>
+                <div className="text-xs text-slate-500 dark:text-slate-400 mb-2">
+                  <b>Ordem que será exportada:</b> {selectedBoards.map(b => b.name).join(' → ') || '(nenhum)'}
+                </div>
                 <div className="rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 p-2 max-h-64 overflow-auto space-y-1">
                   {boards.map(b => {
                     const checked = selectedBoardIds.includes(b.id);
