@@ -37,6 +37,7 @@
   - UX (Deals): removido o botão **Cockpit** do modal de detalhes do deal (mantemos o cockpit pelo modo Focus).
   - UX (Deals): barra de estágios no modal do deal agora aparece como **linha do tempo (status)** — mais baixa e discreta, evitando parecer um “menu”.
   - UX (Deals): refinada a “linha do tempo” de estágios (estilo mais clean): **apenas o estágio atual em cor**, demais neutros, conectores discretos e interação sem “cara de botão”.
+  - UX (Deals): ícones no composer de nota do modal do deal agora funcionam: **modelo de nota** (documento) e **ditado por voz** com feedback quando o navegador bloquear permissão.
 
 ## 24/12/2025
 
