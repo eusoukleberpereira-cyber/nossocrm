@@ -667,7 +667,7 @@ export const BoardCreationWizard: React.FC<BoardCreationWizardProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-stretch sm:items-center justify-center p-2 sm:p-6">
+    <div className="fixed inset-0 z-50 flex items-stretch sm:items-center justify-center p-2 sm:p-4">
       <AIProcessingModal
         isOpen={isProcessingModalOpen}
         currentStep={processingStep}
@@ -676,7 +676,9 @@ export const BoardCreationWizard: React.FC<BoardCreationWizardProps> = ({
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
 
       <div
-        className={`relative z-10 w-full h-full sm:h-auto ${isChatMode ? 'sm:max-w-6xl' : 'sm:max-w-5xl'} bg-white dark:bg-dark-card rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[calc(100vh-1rem)] sm:max-h-[90vh] transition-all duration-300`}
+        // NOTE: we hard-cap width/height by viewport to avoid overflow on small screens.
+        // `dvh` handles mobile browser chrome better than `vh`.
+        className={`relative z-10 w-full h-full sm:h-auto max-w-[calc(100vw-1rem)] ${isChatMode ? 'lg:max-w-6xl' : 'lg:max-w-5xl'} bg-white dark:bg-dark-card rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[calc(100dvh-1rem)] sm:max-h-[calc(100dvh-2rem)] transition-all duration-300`}
       >
         {/* Header */}
         <div className="flex items-center justify-between p-4 sm:p-6 border-b border-slate-200 dark:border-white/10 shrink-0">

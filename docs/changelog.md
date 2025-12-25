@@ -19,6 +19,7 @@
   - Playbook (Infoprodutor): board opcional **Renovações (Assinatura)** agora é criado como **“6. Renovações (Assinatura)”** para manter a lista numerada.
   - UX (Boards): modal **Criar Novo Board** agora é **responsivo em telas menores** (mobile quase full-screen com scroll interno; modo chat vira coluna no mobile e só divide em 2 colunas no desktop).
   - UX (Boards): refinado sizing do modal do Wizard para não “inflar” em telas maiores (mobile `h-full`, desktop `h-auto` + `max-w` menor).
+  - UX (Boards): modal do Wizard agora tem **hard cap por viewport** (`max-w: calc(100vw - padding)` / `max-h: calc(100dvh - padding)`) para evitar overflow em telas pequenas.
 
 ## 24/12/2025
 
