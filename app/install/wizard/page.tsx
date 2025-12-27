@@ -1087,47 +1087,47 @@ export default function InstallWizardPage() {
 
                   {supabaseAdvanced ? (
                     <div className="space-y-4">
-                      <div className="space-y-2">
-                        <label className="text-sm text-slate-600 dark:text-slate-300">
-                          Anon key
-                        </label>
-                        <input
+                  <div className="space-y-2">
+                    <label className="text-sm text-slate-600 dark:text-slate-300">
+                      Anon key
+                    </label>
+                    <input
                           type="password"
-                          value={supabaseAnonKey}
-                          onChange={(e) => setSupabaseAnonKey(e.target.value)}
-                          className="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500"
+                      value={supabaseAnonKey}
+                      onChange={(e) => setSupabaseAnonKey(e.target.value)}
+                      className="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500"
                           placeholder="(auto)"
-                        />
-                      </div>
+                    />
+                  </div>
 
-                      <div className="space-y-2">
-                        <label className="text-sm text-slate-600 dark:text-slate-300">
-                          Service role key
-                        </label>
-                        <input
+                  <div className="space-y-2">
+                    <label className="text-sm text-slate-600 dark:text-slate-300">
+                      Service role key
+                    </label>
+                    <input
                           type="password"
-                          value={supabaseServiceKey}
-                          onChange={(e) => setSupabaseServiceKey(e.target.value)}
-                          className="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500"
+                      value={supabaseServiceKey}
+                      onChange={(e) => setSupabaseServiceKey(e.target.value)}
+                      className="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500"
                           placeholder="(auto)"
-                        />
-                      </div>
+                    />
+                  </div>
 
-                      <div className="space-y-2">
-                        <label className="text-sm text-slate-600 dark:text-slate-300">
-                          DB connection string
-                        </label>
-                        <input
+                  <div className="space-y-2">
+                    <label className="text-sm text-slate-600 dark:text-slate-300">
+                      DB connection string
+                    </label>
+                    <input
                           type="password"
-                          value={supabaseDbUrl}
-                          onChange={(e) => setSupabaseDbUrl(e.target.value)}
-                          className="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500"
+                      value={supabaseDbUrl}
+                      onChange={(e) => setSupabaseDbUrl(e.target.value)}
+                      className="w-full bg-slate-50 dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500"
                           placeholder="(auto)"
-                        />
-                        <p className="text-xs text-slate-500 dark:text-slate-400">
+                    />
+                    <p className="text-xs text-slate-500 dark:text-slate-400">
                           Só use se o auto-preenchimento falhar. (Settings &gt; Database)
-                        </p>
-                      </div>
+                    </p>
+                  </div>
                     </div>
                   ) : null}
                 </div>

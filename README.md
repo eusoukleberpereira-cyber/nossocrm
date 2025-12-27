@@ -2,9 +2,9 @@
 
 CRM multi-tenant com foco em produtividade (pipeline/boards, contatos, atividades, inbox) e recursos de I.A. integrados. O frontend e o backend (Route Handlers) vivem no mesmo projeto Next.js.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=COLOQUE_AQUI_A_URL_DO_SEU_REPO_NO_GITHUB)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/thaleslaray/nossocrm&teamSlug=thaleslaray)
 
-> Troque `COLOQUE_AQUI_A_URL_DO_SEU_REPO_NO_GITHUB` pela URL do repositório (ex.: `https://github.com/org/nosso-crm`).
+> Quer importar um repositório diferente? Use: `https://vercel.com/new?teamSlug=thaleslaray`
 
 ## Stack
 
