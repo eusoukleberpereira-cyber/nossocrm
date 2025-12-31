@@ -35,9 +35,12 @@ yarn-error.log*
 # local dev logs
 dev_server.log
 
-# Cursor IDE (plans are local/personal)
-.cursor/plans/
-.cursor/debug.log
+# Cursor IDE (local/personal configs)
+.cursor/
+
+# Other AI/dev tools (local configs)
+.jules/
+.specify/
 
 # testsprite generated artifacts (may contain PII)
 testsprite_tests/tmp/
